@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-django
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: django-app
+  template:
+    metadata:
+      labels:
+        app: django-app
+    spec: 
+      containers:
+      - name: django
+        image: eric096/django-kubernetes-plus:v15
+        command: ["/bin/bash", "-c", "python manage.py migrate"]
+        env:
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: secret-django
+              key: DB_USER
+        - name: DB_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: secret-django
+              key: DB_DATABASE
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: secret-django
+              key: DB_PASSWORD
+        - name: DB_HOST
+          valueFrom:
+            secretKeyRef:
+              name: secret-django
+              key: DB_HOST
+        - name: DB_PORT
+          valueFrom:
+            secretKeyRef:
+              name: secret-django
+              key: DB_PORT
+        ports:
+        - containerPort: 8000
+          protocol: TCP  
+          

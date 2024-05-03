@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap-django
+
+data:
+  DEBUG : 'True'
+  DB_NAME : 'dGVzdGUtZGI='
+  DB_HOST : '10.107.242.75'
+  DB_PORT: '5432'
